@@ -1,0 +1,45 @@
+PROJET AMR FACTORY - robot autonome dans une usine de cablage (Gazebo + navigation + QR codes)
+==========================================================================================
+
+CE QU'IL FAUT
+- Windows 10 (a jour) ou Windows 11, avec la virtualisation activee dans le BIOS
+- 8 Go de RAM, 15 Go libres, une connexion internet (pour l'installation)
+
+ETAPE 0 - DEZIPPER
+Clic droit sur le ZIP > "Extraire tout". Ne lancez PAS les fichiers depuis l'interieur du ZIP.
+
+ETAPE 1 - INSTALLER (une seule fois, 10 a 20 minutes)
+Double-cliquez sur   1_INSTALLER.bat
+ - Si Ubuntu 24.04 n'est pas installe, il l'installe. Creez un nom d'utilisateur et un mot de passe,
+   fermez la fenetre Ubuntu (redemarrez le PC si Windows le demande), puis relancez 1_INSTALLER.bat.
+ - Le mot de passe Ubuntu est demande : rien ne s'affiche quand on le tape, c'est normal.
+ - A la fin : "Installation terminee".
+
+ETAPE 2 - LANCER LE SIMULATEUR
+Double-cliquez sur   2_LANCER_SIMULATEUR.bat
+Une fenetre Gazebo orange s'ouvre en 1 a 2 minutes. NE FERMEZ PAS la fenetre noire.
+Dans Gazebo : fermez les deux panneaux bleus (croix), zoomez avec la molette de la souris.
+
+ETAPE 3 - LANCER LE ROBOT (quand l'usine est visible)
+Double-cliquez sur   3_LANCER_NAVIGATEUR.bat
+ - Un menu liste les postes : tapez un numero + Entree (ex : 3), le robot y va.
+ - Tapez  p  + Entree : patrouille de tous les postes.   q : quitter.
+OU double-cliquez sur 4_PATROUILLE_TOUS_LES_POSTES.bat (patrouille directe).
+
+CE QUE FAIT LE ROBOT
+ - carte de l'usine en memoire, calcul du chemin (A*), conduite autonome
+ - evite les obstacles (palettes, chariot, personnes) avec son LiDAR et replanifie
+ - s'arrete a chaque poste et LIT LE QR CODE peint au sol :
+   [QR] scanned 'ST:WS3' -> station assembly_ws3: CORRECT
+
+SI CA NE MARCHE PAS
+ - "wsl" non reconnu ou erreur de virtualisation : activez la virtualisation (BIOS) et lancez dans PowerShell : wsl --update
+ - Fenetre Gazebo noire ou tres lente : normal sans carte graphique, attendez 2 minutes.
+ - Le robot ne bouge pas : fermez tout, relancez l'etape 2, attendez l'usine, puis l'etape 3.
+ - [QR] no QR code could be read : relancez l'etape 2 (le simulateur doit etre lance avec ce projet).
+
+COMMANDES MANUELLES (si les .bat ne marchent pas) - dans PowerShell :
+   wsl -d Ubuntu-24.04
+   cd ~/amr_projet
+   ./start_sim.sh          (1er onglet, ne plus y toucher)
+   ./start_nav.sh          (2e onglet, une fois l'usine visible)   ou   ./start_nav.sh --patrol
