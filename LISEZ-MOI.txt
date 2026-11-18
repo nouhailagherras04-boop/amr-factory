@@ -1,45 +1,40 @@
-PROJET AMR FACTORY - robot autonome dans une usine de cablage (Gazebo + navigation + QR codes)
-==========================================================================================
+# AMR Factory
 
-CE QU'IL FAUT
-- Windows 10 (a jour) ou Windows 11, avec la virtualisation activee dans le BIOS
-- 8 Go de RAM, 15 Go libres, une connexion internet (pour l'installation)
+Autonomous Mobile Robot simulation inside a realistic cable / wiring factory.
 
-ETAPE 0 - DEZIPPER
-Clic droit sur le ZIP > "Extraire tout". Ne lancez PAS les fichiers depuis l'interieur du ZIP.
+Built with **Gazebo Harmonic** + pure Python navigator (no full ROS required).
 
-ETAPE 1 - INSTALLER (une seule fois, 10 a 20 minutes)
-Double-cliquez sur   1_INSTALLER.bat
- - Si Ubuntu 24.04 n'est pas installe, il l'installe. Creez un nom d'utilisateur et un mot de passe,
-   fermez la fenetre Ubuntu (redemarrez le PC si Windows le demande), puis relancez 1_INSTALLER.bat.
- - Le mot de passe Ubuntu est demande : rien ne s'affiche quand on le tape, c'est normal.
- - A la fin : "Installation terminee".
+## Features
 
-ETAPE 2 - LANCER LE SIMULATEUR
-Double-cliquez sur   2_LANCER_SIMULATEUR.bat
-Une fenetre Gazebo orange s'ouvre en 1 a 2 minutes. NE FERMEZ PAS la fenetre noire.
-Dans Gazebo : fermez les deux panneaux bleus (croix), zoomez avec la molette de la souris.
+- Autonomous navigation using A* path planning
+- LiDAR-based dynamic obstacle avoidance and re-planning
+- QR code verification at every workstation
+- Multiple factory stations (assembly, cable cutter, crimping, ultrasonic welder, QC, packing, etc.)
+- One-click installation and launch on Windows (via WSL)
+- Interactive menu or full automatic patrol mode
 
-ETAPE 3 - LANCER LE ROBOT (quand l'usine est visible)
-Double-cliquez sur   3_LANCER_NAVIGATEUR.bat
- - Un menu liste les postes : tapez un numero + Entree (ex : 3), le robot y va.
- - Tapez  p  + Entree : patrouille de tous les postes.   q : quitter.
-OU double-cliquez sur 4_PATROUILLE_TOUS_LES_POSTES.bat (patrouille directe).
+## Quick Start (Windows)
 
-CE QUE FAIT LE ROBOT
- - carte de l'usine en memoire, calcul du chemin (A*), conduite autonome
- - evite les obstacles (palettes, chariot, personnes) avec son LiDAR et replanifie
- - s'arrete a chaque poste et LIT LE QR CODE peint au sol :
-   [QR] scanned 'ST:WS3' -> station assembly_ws3: CORRECT
+1. Extract the project
+2. Double-click `1_INSTALLER.bat` (first time only)
+3. Double-click `2_LANCER_SIMULATEUR.bat`
+4. When the factory appears in Gazebo, double-click `3_LANCER_NAVIGATEUR.bat`
 
-SI CA NE MARCHE PAS
- - "wsl" non reconnu ou erreur de virtualisation : activez la virtualisation (BIOS) et lancez dans PowerShell : wsl --update
- - Fenetre Gazebo noire ou tres lente : normal sans carte graphique, attendez 2 minutes.
- - Le robot ne bouge pas : fermez tout, relancez l'etape 2, attendez l'usine, puis l'etape 3.
- - [QR] no QR code could be read : relancez l'etape 2 (le simulateur doit etre lance avec ce projet).
+You can also run a full patrol with `4_PATROUILLE_TOUS_LES_POSTES.bat`.
 
-COMMANDES MANUELLES (si les .bat ne marchent pas) - dans PowerShell :
-   wsl -d Ubuntu-24.04
-   cd ~/amr_projet
-   ./start_sim.sh          (1er onglet, ne plus y toucher)
-   ./start_nav.sh          (2e onglet, une fois l'usine visible)   ou   ./start_nav.sh --patrol
+## Requirements
+
+- Windows 10/11 with virtualization enabled
+- At least 8 GB RAM
+- Internet connection for the first installation
+
+## Project Structure
+
+- `navigate.py` — Main navigation logic (A* + LiDAR + QR reading)
+- `factory_standalone.sdf` — Gazebo world of the factory
+- `install.sh` / `start_sim.sh` / `start_nav.sh` — Linux scripts
+- `*.bat` — Windows launchers
+
+## License
+
+This project is open source. Feel free to use, modify and share it.
